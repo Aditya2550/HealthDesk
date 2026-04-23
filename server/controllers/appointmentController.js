@@ -5,7 +5,11 @@ const Slot = require('../models/Slot');
 // @route   POST /api/appointments/book
 const bookAppointment = async (req, res) => {
   try {
-    const { doctorId, slotId } = req.body;
+    const { doctorId, slotId, reason, symptoms, notes } = req.body;
+
+    if (!reason || reason.trim() === '') {
+      return res.status(400).json({ message: 'Reason for visit is required' });
+    }
 
     // Check if slot exists and is not booked
     const slot = await Slot.findById(slotId);
@@ -21,7 +25,10 @@ const bookAppointment = async (req, res) => {
       patientId: req.user._id,
       doctorId,
       slotId,
-      status: 'pending'
+      status: 'pending',
+      reason: reason.trim(),
+      symptoms: symptoms?.trim() || '',
+      notes: notes?.trim() || '',
     });
 
     // Mark slot as booked
