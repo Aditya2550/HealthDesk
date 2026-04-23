@@ -124,28 +124,43 @@ export default function DoctorDashboard() {
                 <div style={{ color: '#9ca3af', fontWeight: 600, fontSize: '14px' }}>No appointments yet.</div>
               </div>
             ) : appointments.map(apt => (
-              <div key={apt._id} style={{ ...S.card, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px' }}>
-                <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-                  <Avatar name={apt.patientId?.name} bg="linear-gradient(135deg,#3b82f6,#06b6d4)" />
-                  <div>
-                    <div style={{ fontWeight: 700, fontSize: '14px', color: '#111827' }}>{apt.patientId?.name}</div>
-                    <div style={{ color: '#6b7280', fontSize: '12px' }}>{apt.patientId?.email} · {apt.patientId?.phone}</div>
-                    <div style={{ color: '#9ca3af', fontSize: '12px', marginTop: '2px' }}>
-                      {apt.slotId?.date ? new Date(apt.slotId.date).toDateString() : '—'} · {apt.slotId?.time}
+              <div key={apt._id} style={{ ...S.card, padding: '18px 20px' }}>
+                {/* Top row: patient info + status + action buttons */}
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                    <Avatar name={apt.patientId?.name} bg="linear-gradient(135deg,#3b82f6,#06b6d4)" />
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '14px', color: '#111827' }}>{apt.patientId?.name}</div>
+                      <div style={{ color: '#6b7280', fontSize: '12px' }}>{apt.patientId?.email} · {apt.patientId?.phone}</div>
+                      <div style={{ color: '#9ca3af', fontSize: '12px', marginTop: '2px' }}>
+                        {apt.slotId?.date ? new Date(apt.slotId.date).toDateString() : '—'} · {apt.slotId?.time}
+                      </div>
+                    </div>
+                  </div>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexShrink: 0 }}>
+                    <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '999px', textTransform: 'capitalize', ...statusBadge[apt.status] }}>{apt.status}</span>
+                    <div style={{ display: 'flex', gap: '4px' }}>
+                      {['confirmed', 'completed', 'cancelled'].map(s => (
+                        <button key={s} onClick={() => updateStatus(apt._id, s)}
+                          style={{ fontSize: '11px', background: '#f3f4f6', color: '#374151', fontWeight: 600, border: '1px solid #e5e7eb', borderRadius: '8px', padding: '4px 10px', cursor: 'pointer', textTransform: 'capitalize', fontFamily: 'inherit' }}>
+                          {s}
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                  <span style={{ fontSize: '11px', fontWeight: 700, padding: '4px 12px', borderRadius: '999px', textTransform: 'capitalize', ...statusBadge[apt.status] }}>{apt.status}</span>
-                  <div style={{ display: 'flex', gap: '4px' }}>
-                    {['confirmed', 'completed', 'cancelled'].map(s => (
-                      <button key={s} onClick={() => updateStatus(apt._id, s)}
-                        style={{ fontSize: '11px', background: '#f3f4f6', color: '#374151', fontWeight: 600, border: '1px solid #e5e7eb', borderRadius: '8px', padding: '4px 10px', cursor: 'pointer', textTransform: 'capitalize', fontFamily: 'inherit' }}>
-                        {s}
-                      </button>
-                    ))}
+
+                {/* Patient-submitted pre-booking info */}
+                {apt.reason && (
+                  <div style={{ marginTop: '14px', borderTop: '1px solid #f3f4f6', paddingTop: '12px', background: '#f9fafb', borderRadius: '10px', padding: '12px 14px', marginTop: '12px' }}>
+                    <div style={{ fontSize: '11px', fontWeight: 700, color: '#9ca3af', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: '8px' }}>Patient Information</div>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '5px' }}>
+                      <div style={{ fontSize: '13px' }}><span style={{ fontWeight: 700, color: '#374151' }}>Reason: </span><span style={{ color: '#374151' }}>{apt.reason}</span></div>
+                      {apt.symptoms && <div style={{ fontSize: '13px' }}><span style={{ fontWeight: 700, color: '#374151' }}>Symptoms: </span><span style={{ color: '#6b7280' }}>{apt.symptoms}</span></div>}
+                      {apt.notes && <div style={{ fontSize: '13px' }}><span style={{ fontWeight: 700, color: '#374151' }}>Notes: </span><span style={{ color: '#6b7280' }}>{apt.notes}</span></div>}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             ))}
           </div>
