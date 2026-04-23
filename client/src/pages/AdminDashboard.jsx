@@ -71,7 +71,7 @@ export default function AdminDashboard() {
   ];
 
   const fields = [
-    { label: 'Full Name', name: 'name', type: 'text', placeholder: 'Dr. John Doe' },
+    { label: 'Full Name', name: 'name', type: 'text', placeholder: 'Dr. Full Name' },
     { label: 'Email', name: 'email', type: 'email', placeholder: 'doctor@example.com' },
     { label: 'Password', name: 'password', type: 'password', placeholder: '••••••••' },
     { label: 'Phone', name: 'phone', type: 'text', placeholder: '9876543210' },
