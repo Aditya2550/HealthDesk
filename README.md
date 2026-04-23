@@ -75,6 +75,7 @@ This project was built as a Mini Project for the **Advanced Database Management 
 
 ## 📁 Project Structure
 
+```bash
 healthdesk/
 ├── server/
 │   ├── config/
@@ -103,8 +104,8 @@ healthdesk/
 │       ├── pages/
 │       └── App.jsx
 └── README.md
+```
 
----
 
 ## 🚀 Getting Started
 
