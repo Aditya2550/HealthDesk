@@ -29,6 +29,25 @@ const getSlots = async (req, res) => {
   }
 };
 
+// @desc    Update a slot (Doctor/Admin)
+// @route   PUT /api/slots/:id
+const updateSlot = async (req, res) => {
+  try {
+    const slot = await Slot.findById(req.params.id);
+    if (!slot) return res.status(404).json({ message: 'Slot not found' });
+    if (slot.isBooked) return res.status(400).json({ message: 'Cannot update a booked slot' });
+
+    const { date, time } = req.body;
+    if (date) slot.date = date;
+    if (time) slot.time = time;
+    await slot.save();
+
+    res.json(slot);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 // @desc    Delete a slot (Doctor/Admin)
 // @route   DELETE /api/slots/:id
 const deleteSlot = async (req, res) => {
@@ -43,4 +62,4 @@ const deleteSlot = async (req, res) => {
   }
 };
 
-module.exports = { addSlot, getSlots, deleteSlot };
+module.exports = { addSlot, getSlots, updateSlot, deleteSlot };
