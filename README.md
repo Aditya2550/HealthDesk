@@ -218,14 +218,14 @@ npm start
 }
 ```
 
----
+<!-- ---
 
 ## 👨‍💻 Developer
 
 **Aditya** — Solo Developer
 - GitHub: [@yourusername](https://github.com/yourusername)
 
----
+--- -->
 
 ## 📄 License
 This project is for educational purposes as part of ADBMS Mini Project.
