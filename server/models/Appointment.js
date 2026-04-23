@@ -22,8 +22,17 @@ const appointmentSchema = new mongoose.Schema(
       enum: ["pending", "confirmed", "completed", "cancelled"],
       default: "pending",
     },
+    reason: {
+      type: String,
+      required: [true, 'Reason for visit is required'],
+    },
+    symptoms: {
+      type: String,
+      default: '',
+    },
     notes: {
       type: String,
+      default: '',
     },
   },
   { timestamps: true },
